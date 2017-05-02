@@ -7,3 +7,7 @@
 *.html
 *.nc
 utils/
+*.dbf
+*.shp
+*.shx
+*.prj
