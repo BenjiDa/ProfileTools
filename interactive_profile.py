@@ -47,7 +47,7 @@ data = np.genfromtxt((path+name), delimiter=',', skip_header=1,
 mn = name[31:35] #" (m/n = 0.45)"
 
 # output to static HTML file
-output_file("linked_brushing.html")
+output_file("your_name_here.html")
 
 # NEW: create a column data source for the plots to share
 stream_source = ColumnDataSource(data=dict(x0=data['flow_distance'], x1=data['chi'], y=data['elevation']))
