@@ -11,8 +11,8 @@ from bokeh.layouts import layout
 
 
 #Read stream data
-name = "your_file_name.csv" #Set file name
-path = "/path/to/your/data/" #Set path to data
+name = "Mandakini_fullProfileMC_forced_0.45_3_1258909000_10_80_281_for_Arc.csv" #Set file name
+path = "/Users/bmelosh/VagrantBoxes/LSDTopoTools/Topographic_projects/Test_data/" #Set path to data
 df = pd.read_csv(path+name)
 
 
