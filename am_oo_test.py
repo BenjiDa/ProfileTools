@@ -61,7 +61,7 @@ class Profile(ElevationAnalyzer):
 		# look up syntax for this
 		super.ElevationAnalyzer()
 
-	def profile(elev_range, source, x='flow_distance', y='elevation', plot_width=500, plot_height=250, toolbar_location='above', title='Title', x_axis_label='Label', y_axis_label='Label'):
+	def profile(elev_range, source, x='x', y='y', plot_width=500, plot_height=250, toolbar_location='above', title='Title', x_axis_label='Label', y_axis_label='Label'):
     	elev_range = self.define_elevation_boundaries()
  
 		plot = bp.figure(plot_width=500, plot_height=250, toolbar_location='above', 
