@@ -6,7 +6,7 @@ import bokeh.plotting as bp
 from bokeh.models import HoverTool
 
 
-class ElevationAnalyzer():
+class ElevationAnalyzer(object):
     def __init__(self, file_path, file_name, color_variable):
         self.file_path = file_path
         self.file_name = file_name
