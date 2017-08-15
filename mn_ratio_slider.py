@@ -7,6 +7,10 @@ from bokeh.models import ColumnDataSource
 from bokeh.models.widgets import Slider, TextInput
 from bokeh.plotting import figure
 
+#Read a raster
+# f = gdal.Open("/Users/bmelosh/VagrantBoxes/LSDTopoTools/Topographic_projects/Test_data/Mandakini_fullProfileMC_forced_0.2_3_1258909000_10_80_281_for_Arc.csv")
+# fA = f.ReadAsArray()
+
 # Set up data
 path = "/Users/bmelosh/VagrantBoxes/LSDTopoTools/Topographic_projects/Cache_creek/Previous_LSDTT_version/Channel_extraction/Perkins_creek/" #Set path to data
 
