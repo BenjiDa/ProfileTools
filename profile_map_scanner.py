@@ -7,7 +7,7 @@ from bokeh.models import ColumnDataSource, DataRange1d
 from bokeh.models import HoverTool
 #from bokeh.layouts import layout
 
-
+#run with command line: bokeh serve --show interactive_profiler.py
 
 # define boundaries of the plot area, default is adding on 1 km to easting and northing
 def define_boundaries(df, r=1000):

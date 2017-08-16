@@ -1,11 +1,20 @@
+import gdal
+import matplotlib.pyplot as plt
+import raster_plot
+
+
 #Use Matplotlib to plot raster as well as stream profile and chi profile
+
+raster_path = "/Users/bmelosh/VagrantBoxes/LSDTopoTools/Topographic_projects/Cache_creek/"
+raster = gdal.Open(raster_path + "/Cache_creek_clip.bil")#Get raster data
+dem = raster.ReadAsArray()
 
 cm = plt.cm.gist_earth
 
 
 fig, ax = plt.subplots(3, figsize=(10,10), sharex=False) #define 2 subfigures
 
-ax[0].contourf(X, Y, M_DEM, levels=np.linspace(np.amin(M_DEM[M_DEM > 0]),np.amax(M_DEM), 50))
+ax[0].contourf(X, Y, dem, levels=np.linspace(np.amin(dem[dem > 0]),np.amax(dem), 50))
 ax[0].plot(data['x'], data['y'], 'ro',  markersize=2)
 #ax[0].imshow(fA, interpolation='nearest', vmin=0, cmap=plt.cm.gray) 
 ax[0].set_aspect('equal')

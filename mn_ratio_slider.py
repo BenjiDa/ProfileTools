@@ -1,3 +1,4 @@
+#run with command line: bokeh serve --show interactive_profiler.py
 
 import numpy as np
 
@@ -12,8 +13,8 @@ from bokeh.plotting import figure
 # fA = f.ReadAsArray()
 
 # Set up data
-path = "/Users/bmelosh/VagrantBoxes/LSDTopoTools/Topographic_projects/Cache_creek/Previous_LSDTT_version/Channel_extraction/Perkins_creek/" #Set path to data
-
+creek = "Perkins_creek"
+path = "/Users/bmelosh/VagrantBoxes/LSDTopoTools/Topographic_projects/Cache_creek/Previous_LSDTT_version/Channel_extraction/"+creek+"/" #Set path to data
 mnvalues = [0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3, 0.325, 0.35, 0.375, 0.4, 0.425, 0.45, 0.475, 0.5, 0.525, 0.55, 0.575, 0.6, 0.625]
 
 all_data = {}

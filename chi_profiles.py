@@ -2,7 +2,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-path = "/Users/bmelosh/VagrantBoxes/LSDTopoTools/Topographic_projects/Cache_creek/Previous_LSDTT_version/Channel_extraction/Perkins_creek/" #Set path to data
+creek= "Perkins_creek"
+path = "/Users/bmelosh/VagrantBoxes/LSDTopoTools/Topographic_projects/Cache_creek/Previous_LSDTT_version/Channel_extraction/"+creek+"/" #Set path to data
 name = "Cache_creek_clip_fullProfileMC_forced_0.5_20_-4924088_20_90_3010.tree" #Set file name
 
 ## IMPORT DATA for csv or tree files
@@ -16,10 +17,10 @@ def plot_single_channel(data, chan_num):
     plt.figure()
     chan_index = data['chan_number'] == chan_num # 0 = base channel
     chan = data[chan_index] # selects the "True" rows recorded in the boolean index
-    flow_distance = chan['flow_distance']
+    flow_distance = chan['flow_distance']-min(chan['flow_distance'])
     elevation = chan['elevation']
     plt.plot(flow_distance, elevation, color='b')
-    plt.xlabel('Flow Distance (m)')
+    plt.xlabel('Distance (m)')
     plt.ylabel('Elevation (m)')
     plt.show()
     
@@ -28,7 +29,7 @@ def plot_single_channel_chi(data, chan_num):
     chan = data[chan_index] # selects the "True" rows recorded in the boolean index
     chi = chan['chi']
     elevation = chan['elevation']
-    plt.scatter(chi, elevation, c=chi, cmap=plt.get_cmap("jet"))
+    plt.scatter(chi, elevation, c=chi, cmap=plt.get_cmap("jet"), edgecolors='none')
     plt.xlabel('Chi (X)')
     plt.ylabel('Elevation (m)')
     plt.show()
@@ -39,10 +40,10 @@ def plot_all_channels(data):
     for i in range(0, len(np.unique(data['chan_number']))):
         chan_index = data['chan_number'] == i
         chan = data[chan_index] # selects the "True" rows recorded in the boolean index
-        flow_distance = chan['flow_distance']
+        flow_distance = chan['flow_distance']-min(chan['flow_distance'])
         elevation = chan['elevation']
         plt.plot(flow_distance, elevation, color='b')
-    plt.xlabel('Flow Distance (m)')
+    plt.xlabel('Distance (m)')
     plt.ylabel('Elevation (m)')
     plt.show()
     
@@ -54,10 +55,10 @@ def plot_all_channels_chi(data):
         chan = data[chan_index] # selects the "True" rows recorded in the boolean index
         chi = chan['chi']
         elevation = chan['elevation']
-        plt.scatter(chi, elevation, c=chi, cmap=plt.get_cmap("jet"))
+        plt.scatter(chi, elevation, c='b', cmap=plt.get_cmap("jet"), edgecolors='none')
     plt.xlabel('Chi (X)')
     plt.ylabel('Elevation (m)')
-    plt.title('Creek name')
+    plt.title(creek)
     plt.show()
 
 #Example of how to use.
