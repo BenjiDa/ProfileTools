@@ -1,4 +1,4 @@
-#run with command line: bokeh serve --show interactive_profiler.py
+#run with command line: bokeh serve --show mn_ratio_slider.py
 
 import numpy as np
 
