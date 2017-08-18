@@ -1,13 +1,9 @@
-import gdal
-import matplotlib.pyplot as plt
-import raster_plot
+
 
 
 #Use Matplotlib to plot raster as well as stream profile and chi profile
 
-raster_path = "/Users/bmelosh/VagrantBoxes/LSDTopoTools/Topographic_projects/Cache_creek/"
-raster = gdal.Open(raster_path + "/Cache_creek_clip.bil")#Get raster data
-dem = raster.ReadAsArray()
+
 
 cm = plt.cm.gist_earth
 

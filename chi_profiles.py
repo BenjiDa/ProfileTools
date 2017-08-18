@@ -2,15 +2,15 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-creek= "Perkins_creek"
-path = "/Users/bmelosh/VagrantBoxes/LSDTopoTools/Topographic_projects/Cache_creek/Previous_LSDTT_version/Channel_extraction/"+creek+"/" #Set path to data
-name = "Cache_creek_clip_fullProfileMC_forced_0.5_20_-4924088_20_90_3010.tree" #Set file name
+#creek= "Perkins_creek"
+#path = "/Users/bmelosh/VagrantBoxes/LSDTopoTools/Topographic_projects/Cache_creek/Previous_LSDTT_version/Channel_extraction/"+creek+"/" #Set path to data
+#name = "Cache_creek_clip_fullProfileMC_forced_0.5_20_-4924088_20_90_3010.tree" #Set file name
 
 ## IMPORT DATA for csv or tree files
 #for csv files
 #data = np.genfromtxt((path+name), delimiter=',', skip_header=1, names=['id', 'x', 'y', 'chan_number', 'reciever_chan','node_on_reciever_chan', 'node', 'row','column', 'flow_distance', 'chi', 'elevation', 'drainage_area', 'n_data_points', 'm_mean','m_st_dev', 'm_std_err', 'b_mean', 'b_st_dev', 'b_std_err', 'DW_mean', 'DW_st_dev', 'DW_std_err', 'fitted_elev_mean', 'fitted_elev_stdev', 'fitted_elev_std_err'])
 #for tree files
-data = np.genfromtxt((path+name), delimiter=' ', skip_header=1, names=['chan_number', 'reciever_chan','node_on_reciever_chan', 'node', 'row','column', 'flow_distance', 'chi', 'elevation', 'drainage_area', 'n_data_points', 'm_mean','m_st_dev', 'm_std_err', 'b_mean', 'b_st_dev', 'b_std_err', 'DW_mean', 'DW_st_dev', 'DW_std_err', 'fitted_elev_mean', 'fitted_elev_stdev', 'fitted_elev_std_err'])
+#data = np.genfromtxt((path+name), delimiter=' ', skip_header=1, names=['chan_number', 'reciever_chan','node_on_reciever_chan', 'node', 'row','column', 'flow_distance', 'chi', 'elevation', 'drainage_area', 'n_data_points', 'm_mean','m_st_dev', 'm_std_err', 'b_mean', 'b_st_dev', 'b_std_err', 'DW_mean', 'DW_st_dev', 'DW_std_err', 'fitted_elev_mean', 'fitted_elev_stdev', 'fitted_elev_std_err'])
 
 
 def plot_single_channel(data, chan_num):
@@ -60,6 +60,29 @@ def plot_all_channels_chi(data):
     plt.ylabel('Elevation (m)')
     plt.title(creek)
     plt.show()
+
+
+
+
+#Plot of distance-elvation of stream channel and color with chi slope, note, this requires different
+#import file than functions above.
+def plot_channel_chi_slope(data, title='Title'):
+
+    profile = plt.figure(figsize=(10,5))
+
+    distance = data['flow_distance'] - min(data['flow_distance'])
+    m_chi = data['m_chi']
+    chi = data['chi']
+    elevation = data['elevation']
+
+    plt.scatter(distance, elevation, c=m_chi, cmap=plt.get_cmap("coolwarm"), s = 4, edgecolors='none')#, viridis, plasma
+    plt.xlabel('Distance (m)')
+    plt.ylabel('Elevation (m)')
+    plt.title(title)
+    
+    plt.show()
+    
+    return profile
 
 #Example of how to use.
 # plt.figure()
