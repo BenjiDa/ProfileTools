@@ -47,7 +47,7 @@ def plot_all_channels(data):
     plt.ylabel('Elevation (m)')
     plt.show()
     
-def plot_all_channels_chi(data):
+def plot_all_channels_chi(data, title):
     plt.figure()
 
     for i in range(0, len(np.unique(data['chan_number']))):
@@ -55,10 +55,10 @@ def plot_all_channels_chi(data):
         chan = data[chan_index] # selects the "True" rows recorded in the boolean index
         chi = chan['chi']
         elevation = chan['elevation']
-        plt.scatter(chi, elevation, c='b', cmap=plt.get_cmap("jet"), edgecolors='none')
+        plt.scatter(chi, elevation, c='b', cmap=plt.get_cmap("jet"), s = 4, edgecolors='none')
     plt.xlabel('Chi (X)')
     plt.ylabel('Elevation (m)')
-    plt.title(creek)
+    plt.title(title)
     plt.show()
 
 
@@ -66,22 +66,36 @@ def plot_all_channels_chi(data):
 
 #Plot of distance-elvation of stream channel and color with chi slope, note, this requires different
 #import file than functions above.
-def plot_channel_chi_slope(data, title='Title'):
+def elevation_profile(data, title='Title', colorby='m_chi'):
+
+    profile = plt.figure(figsize=(10,5))
+    
+    distance = data['flow_distance'] - min(data['flow_distance'])
+    color = data[colorby]
+    chi = data['chi']
+    elevation = data['elevation']
+
+    plt.scatter(distance, elevation, c=color, cmap=plt.get_cmap("coolwarm"), s = 4, edgecolors='none')#, viridis, plasma
+    plt.xlabel('Distance (m)')
+    plt.ylabel('Elevation (m)')
+    plt.title(title)
+
+    return profile
+
+def chi_profile(data, title='Title', colorby='m_chi'):
 
     profile = plt.figure(figsize=(10,5))
 
     distance = data['flow_distance'] - min(data['flow_distance'])
-    m_chi = data['m_chi']
+    color = data[colorby]
     chi = data['chi']
     elevation = data['elevation']
 
-    plt.scatter(distance, elevation, c=m_chi, cmap=plt.get_cmap("coolwarm"), s = 4, edgecolors='none')#, viridis, plasma
-    plt.xlabel('Distance (m)')
+    plt.scatter(chi, elevation, c=color, cmap=plt.get_cmap("coolwarm"), s = 4, edgecolors='none')#, viridis, plasma
+    plt.xlabel('Chi')
     plt.ylabel('Elevation (m)')
     plt.title(title)
-    
-    plt.show()
-    
+
     return profile
 
 #Example of how to use.
