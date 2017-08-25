@@ -14,4 +14,5 @@ examples/
 *.shx
 *.prj
 *.tif
+*.csv
 work_in_progress/
