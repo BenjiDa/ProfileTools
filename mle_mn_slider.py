@@ -1,6 +1,7 @@
 #run with command line: bokeh serve --show mn_ratio_slider.py
 
 import numpy as np
+import pandas as pd
 
 from bokeh.io import curdoc
 from bokeh.layouts import column, widgetbox
@@ -18,11 +19,13 @@ name = creek+'_movern.csv'#name of movern file with all the chi data
 #Create a function to pull in MLE data
 mn_values = [x / 10.0 for x in range(1, 9, 1)]#create a list of floats.
 
+
 def create_MLE_data(mn_values):
     TributariesMLE = []
+    mle_data_i = []
     for mn in mn_values: 
         num = mn
-        full_name = '%s%s_movernstats_%s_fullstats.csv' % (path2, creek, num)
+        full_name = '%s%s_movernstats_%s_fullstats.csv' % (path, creek, num)
 
         name_mle = 'MLE m/n %s' % num
         name_rmse = 'RMSE m/n %s' % num
@@ -99,7 +102,7 @@ def update_data(attrname, old, new):
 
 
     # Generate the new curve
-    x = chi_source.data['m_over_n = '%mn]['chi']
+    x = chi_source.data['m_over_n = %s' % mn]['chi']
     y = chi_source.data['elevation']
 
     chi_source.data = dict(x=x, y=y)
