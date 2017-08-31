@@ -1,7 +1,12 @@
-#run with command line: bokeh serve --show mn_ratio_slider.py
+#run with command line: bokeh serve --show mle_mn_slider.py
 
 import numpy as np
 import pandas as pd
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+import bokeh.models as bm
+import bokeh.plotting as pb
 
 from bokeh.io import curdoc
 from bokeh.layouts import column, widgetbox
@@ -56,20 +61,57 @@ def group_chi_mle_data(creek, path, fname, mn_values):
     return movern_df_tribs_merge, movern_df_ms
 
 
-tribs, main_stem = group_chi_mle_data(creek, path, fname, mn_values)
+tribs, main_stem, mle_data_merge = group_chi_mle_data(creek, path, fname, mn_values)
 
 
-#assign bokeh data sources
-souce_tribs = ColumnDataSource(tribs)
-source = ColumnDataSource(main_stem)
+
+mn = '0.5' #to start the plotting somewhere 
+
+s = tribs.groupby(by='MLE m/n %s' % mn).size()
+cmap = list(s.index.values)
+color_index = pd.Series([cmap.index(item) for item in tribs['MLE m/n %s' % mn].values])
+norm = mpl.colors.Normalize()
+norm.autoscale(color_index)
+sm = mpl.cm.ScalarMappable(norm, 'autumn_r')#Wistia autumn_r
+
+colors = [
+    "#%02x%02x%02x" % (int(r), int(g), int(b)) for r, g, b, a in [sm.to_rgba(item, bytes=True) for item in color_index]
+]
 
 
-# Set up plot
-plot = figure(plot_height=250, plot_width=500, title=creek, x_axis_label='Chi (X)', y_axis_label='Elevation (m)',
-              tools="pan,reset,save,wheel_zoom")
-plot.circle('m_over_n = 0.1', 'elevation', source=source_ms)
 
-#show(plot)
+
+source = bm.ColumnDataSource(
+        data=dict(
+            x=tribs['m_over_n = %s' % mn],#.values,
+            y=tribs.elevation,#,.values,
+            c=colors,
+            desc=tribs['MLE m/n %s' % mn]#.values
+        )
+    )
+
+source_ms = bm.ColumnDataSource(
+            data=dict(
+                x=main_stem['m_over_n = %s' % mn],#.values,
+                y=main_stem.elevation.values))
+
+hover = bm.HoverTool(
+        tooltips=[
+            ("MLE", "@desc"),
+        ]
+    )
+
+pan = bm.PanTool()
+zoom = bm.WheelZoomTool()
+
+p = bp.figure(plot_height=250, plot_width=500, title=creek, x_axis_label='Chi (X)', y_axis_label='Elevation (m)', 
+              tools=[pan, zoom, hover])
+p.circle(x='x', y='y', fill_color='darkgray', line_color=None, source=source_ms)
+p.circle(x='x', y='y', fill_color='c', size=8, line_color=None, source=source)
+
+
+
+
 # # Set up widgets
 mn_values_slider = Slider(title="m/n values", value=0.0, start=0.1, end=0.8, step=0.1)
 
@@ -80,12 +122,15 @@ def update_data(attrname, old, new):
     # Get the current slider values
     mn = mn_values_slider.value
 
-
     # Generate the new curve
-    x = source_ms.data['m_over_n = %s' % mn]['chi']
-    y = source_ms.data['elevation']
+    x = tribs['m_over_n = %s' % mn]#.values
+    y = tribs['elevation']#.values
+    xms = main_stem['m_over_n = %s' % mn]#.values
+    yms = main_stem['elevation']#.values
 
-    source_ms.data = dict(x=x, y=y)
+    source_ms.data = dict(x=xms, y=yms)
+    source.data = dict(x=x, y=y)
+    
 
 for mn in [mn_values_slider]:
     mn.on_change('value', update_data)
@@ -93,9 +138,8 @@ for mn in [mn_values_slider]:
 # Set up layouts and add to document
 inputs = widgetbox(mn_values_slider)
 
-curdoc().add_root(column(inputs, plot, width=800))
+curdoc().add_root(column(inputs, p, width=800))
 curdoc().title = "m/n values"
-
 
 
 
