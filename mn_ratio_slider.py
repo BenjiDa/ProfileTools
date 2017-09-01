@@ -35,7 +35,7 @@ plot.circle('x', 'y', source=source)
 
 
 # Set up widgets
-mn_values = Slider(title="m/n values", value=0.0, start=0.15, end=0.625, step=0.025)
+mn_values = Slider(title="m/n values", value=0.5, start=0.15, end=0.625, step=0.025)
 
 
 # Set up callbacks
@@ -43,7 +43,6 @@ def update_data(attrname, old, new):
 
     # Get the current slider values
     mn = mn_values.value
-
 
     # Generate the new curve
     x = all_data[mn]['chi']
