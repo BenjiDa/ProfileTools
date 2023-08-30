@@ -13,5 +13,5 @@ pylzma==0.5.0
 pysal==2.0.0
 rasterio==1.0.22
 utm==0.4.2
-webargs==5.3.0
+webargs==6.0.0
 PyYAML==5.1
